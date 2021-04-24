@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.shakil.githubreposhowcase.database.model.TrendingRepoEntity
 
 @Dao
-interface  TrendingRepoDoa {
+interface TrendingRepoDoa {
     @Insert
     suspend fun insertTrendingRepo(trendingRepo: TrendingRepoEntity): Long
 
@@ -20,6 +20,7 @@ interface  TrendingRepoDoa {
     @Query("SELECT COUNT(*) FROM repo")
     suspend fun getCount(): Int
 
-    @Query("SELECT * FROM repo WHERE page_number = :page LIMIT 1")
-    suspend fun getTrendingReposByPageNumber(page: Int): TrendingRepoEntity?
+    @Query("SELECT * FROM repo")
+    suspend fun getAllRepo(): List<TrendingRepoEntity>
+
 }

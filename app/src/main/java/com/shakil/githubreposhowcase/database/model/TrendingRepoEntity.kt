@@ -20,7 +20,5 @@ data class TrendingRepoEntity(
     @ColumnInfo(name = "image_url")
     val imageUrl: String,
     @ColumnInfo(name = "stars")
-    val stars: Int,
-    @ColumnInfo(name = "page_number")
-    val pageNum: Int,
+    val stars: Int
 )

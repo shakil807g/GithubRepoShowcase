@@ -7,7 +7,7 @@ import com.shakil.githubreposhowcase.database.model.TrendingRepoEntity
 @Database(entities = [TrendingRepoEntity::class ], version = 1)
 abstract class AppDatabase: RoomDatabase() {
 
-    abstract fun recipeDao(): TrendingRepoDoa
+    abstract fun trendingRepoDao(): TrendingRepoDoa
 
     companion object{
         val DATABASE_NAME: String = "github_db"
