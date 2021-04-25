@@ -49,7 +49,7 @@ android {
 dependencies {
 
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.6.0-alpha02'
+    implementation 'androidx.core:core-ktx:1.6.0-alpha01'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //DataStore
@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
 
     //Compose
-    implementation "androidx.activity:activity-compose:1.3.0-alpha07"
+    implementation "androidx.activity:activity-compose:1.3.0-alpha06"
     implementation "androidx.compose.compiler:compiler:$compose_version"
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -110,6 +110,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-coil:0.7.1"
     implementation "com.google.accompanist:accompanist-pager:0.7.1"
     implementation "com.google.accompanist:accompanist-insets:0.7.1"
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.8.1"
     //Networking
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'

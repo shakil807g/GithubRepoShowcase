@@ -20,7 +20,7 @@ interface TrendingRepoDoa {
     @Query("SELECT COUNT(*) FROM repo")
     suspend fun getCount(): Int
 
-    @Query("SELECT * FROM repo")
+    @Query("SELECT * FROM repo ORDER BY stars DESC")
     suspend fun getAllRepo(): List<TrendingRepoEntity>
 
 }

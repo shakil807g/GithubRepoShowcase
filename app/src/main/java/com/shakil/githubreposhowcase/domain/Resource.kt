@@ -3,6 +3,7 @@ package com.shakil.githubreposhowcase.domain
 enum class DataStatus {
     SUCCESS,
     ERROR,
+    APPEND_LOADING,
     LOADING,
     IDLE
 }
@@ -24,6 +25,10 @@ data class Resource<out T>(
 
         fun <T> loading(): Resource<T> {
             return Resource(DataStatus.LOADING, null, null)
+        }
+
+        fun <T> append_loading(): Resource<T> {
+            return Resource(DataStatus.APPEND_LOADING, null, null)
         }
 
         fun <T> idle(): Resource<T> {

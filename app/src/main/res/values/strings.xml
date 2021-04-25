@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GithubRepoShowcase</string>
+    <string name="appbar_heading">Trending</string>
 </resources>

@@ -22,7 +22,12 @@ class TrendingRepos(
 ) {
 
     fun execute(pagingKey: PagingKey): Flow<Resource<List<TrendingRepo>>> = flow {
-        emit(Resource.loading<List<TrendingRepo>>())
+
+        if (pagingKey == PagingKey.INITIAL) {
+            emit(Resource.loading<List<TrendingRepo>>())
+        } else if (pagingKey == PagingKey.PAGE_END) {
+            emit(Resource.append_loading<List<TrendingRepo>>())
+        }
         when (pagingKey) {
             PagingKey.INITIAL -> {
                 val totalItemOnDb = trendingRepoDoa.getCount()
@@ -40,6 +45,7 @@ class TrendingRepos(
                 val totalItemOnDb = trendingRepoDoa.getCount()
                 if (totalItemOnDb == MAX_ITEMS) {
                     emit(Resource.idle())
+                    return@flow
                 }
                 val nextPageToLoad = (totalItemOnDb / PER_PAGE) + 1
                 val repoResponse = service.getTrendingRepos(nextPageToLoad, PER_PAGE)

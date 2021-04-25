@@ -16,7 +16,7 @@ class TrendingRepoEntityToDomainMapper @Inject constructor() : Mapper<List<Trend
                     language = item.language,
                     description = item.description,
                     imageUrl = item.imageUrl,
-                    stars = item.stars
+                    stars = item.stars.toString()
                 )
             }
         } else {

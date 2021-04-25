@@ -16,7 +16,7 @@ class TrendingRepoResponseMapper @Inject constructor() : Mapper<TrendingRepoResp
                     language = item?.language ?: "",
                     description = item?.description ?: "",
                     imageUrl = item?.owner?.avatarUrl ?: "",
-                    stars = item?.stargazersCount ?: 0
+                    stars = item?.stargazersCount.toString()
                 )
             }
         } else {
