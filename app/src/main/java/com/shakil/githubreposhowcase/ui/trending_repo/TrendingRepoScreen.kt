@@ -16,10 +16,13 @@ import com.shakil.githubreposhowcase.domain.DataStatus.*
 import com.shakil.githubreposhowcase.domain.PagingKey
 import com.shakil.githubreposhowcase.ui.common.shimmer.ShimmerList
 import com.shakil.githubreposhowcase.ui.theme.Purple200
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 @Composable
 fun TrendingRepoScreen(trendingRepoViewModel: TrendingRepoViewModel) {
-    val state by trendingRepoViewModel.trendingRepoState.collectAsState()
     val list = trendingRepoViewModel.trendingRepoList
     val refreshState = rememberSwipeRefreshState(trendingRepoViewModel.isRefreshing)
     val scrollState = rememberLazyListState()
@@ -56,7 +59,7 @@ fun TrendingRepoScreen(trendingRepoViewModel: TrendingRepoViewModel) {
                     }
                 }
 
-                when (state.status) {
+                when (trendingRepoViewModel.trendingRepoState.status) {
                     LOADING -> {
                         ShimmerList()
                     }
@@ -69,11 +72,8 @@ fun TrendingRepoScreen(trendingRepoViewModel: TrendingRepoViewModel) {
                         }
                     }
                     ERROR -> {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            CircularProgressIndicator(
-                                color = Purple200,
-                                modifier = Modifier.align(Alignment.BottomCenter)
-                            )
+                        ErrorItem(trendingRepoViewModel.trendingRepoState.error) {
+                            trendingRepoViewModel.fetchRepoList(PagingKey.INITIAL)
                         }
                     }
                 }
