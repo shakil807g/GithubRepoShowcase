@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.shakil.githubreposhowcase.domain.DataStatus.*
 import com.shakil.githubreposhowcase.domain.PagingKey
@@ -42,7 +43,14 @@ fun TrendingRepoScreen(
         state = refreshState,
         onRefresh = {
             trendingRepoViewModel.fetchRepoList(PagingKey.REFRESH)
-        },
+        },indicator = { state, trigger ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = trigger,
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onBackground
+            )
+        }
     ) {
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.primary)) {
             AppBar(darkTheme) { onThemeChange(it) }
@@ -85,7 +93,6 @@ fun TrendingRepoScreen(
                 }
 
             }
-
 
         }
 

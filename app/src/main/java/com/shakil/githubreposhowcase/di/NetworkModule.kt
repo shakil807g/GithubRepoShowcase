@@ -2,14 +2,10 @@ package com.shakil.githubreposhowcase.di
 
 import android.content.Context
 import coil.ImageLoader
-import coil.util.CoilUtils
 import com.google.gson.Gson
 import com.shakil.githubreposhowcase.network.GithubApiService
 import com.shakil.githubreposhowcase.network.MoshiFactory
 import com.shakil.githubreposhowcase.util.Constants.GITHUB_BASE_URL
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +15,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.*
 import javax.inject.Singleton
 
 
