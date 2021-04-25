@@ -38,7 +38,7 @@ fun ErrorItem(error: Throwable? = null, onClickRetry: () -> Unit) {
                 animationState = animationState,
                 modifier = Modifier.width(250.dp).height(250.dp)
             )
-
+            Spacer(modifier = Modifier.width(100.dp).height(16.dp))
             if (error is IOException) {
                 Text(
                     text = "No internet connection\nPlease check your internet settings.",
@@ -65,7 +65,7 @@ fun ErrorItem(error: Throwable? = null, onClickRetry: () -> Unit) {
                     )
                 )
             }
-            Spacer(modifier = Modifier.width(100.dp).height(10.dp))
+            Spacer(modifier = Modifier.width(100.dp).height(16.dp))
             Text(
                 text = "An alien is probably blocking your signal",
                 maxLines = 3,

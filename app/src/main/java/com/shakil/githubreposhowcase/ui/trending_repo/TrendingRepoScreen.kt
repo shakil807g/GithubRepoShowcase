@@ -1,5 +1,6 @@
 package com.shakil.githubreposhowcase.ui.trending_repo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +24,11 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 @FlowPreview
 @Composable
-fun TrendingRepoScreen(trendingRepoViewModel: TrendingRepoViewModel) {
+fun TrendingRepoScreen(
+    darkTheme: Boolean,
+    trendingRepoViewModel: TrendingRepoViewModel,
+    onThemeChange: (newTheme: Boolean) -> Unit
+) {
     val list = trendingRepoViewModel.trendingRepoList
     val refreshState = rememberSwipeRefreshState(trendingRepoViewModel.isRefreshing)
     val scrollState = rememberLazyListState()
@@ -38,8 +44,8 @@ fun TrendingRepoScreen(trendingRepoViewModel: TrendingRepoViewModel) {
             trendingRepoViewModel.fetchRepoList(PagingKey.REFRESH)
         },
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            AppBar { }
+        Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.primary)) {
+            AppBar(darkTheme) { onThemeChange(it) }
             Box {
                 if (!list.isNullOrEmpty()) {
                     LazyColumn(

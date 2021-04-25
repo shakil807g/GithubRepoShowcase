@@ -28,7 +28,8 @@ fun ListItem(trendingRepo: TrendingRepo, onTap: () -> Unit) {
 
     Column {
         Row(
-            modifier = Modifier.fillMaxWidth().clickable { trendingRepo.isExpanded.value = !trendingRepo.isExpanded.value }
+            modifier = Modifier.fillMaxWidth()
+                .clickable { trendingRepo.isExpanded.value = !trendingRepo.isExpanded.value }
                 .padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -37,7 +38,10 @@ fun ListItem(trendingRepo: TrendingRepo, onTap: () -> Unit) {
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
                     text = trendingRepo.username,
-                    style = TextStyle(color = MaterialTheme.colors.onBackground.copy(alpha = 0.5f))
+                    style = TextStyle(
+                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.5f),
+                        fontSize = 18.sp
+                    )
                 )
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
@@ -54,7 +58,10 @@ fun ListItem(trendingRepo: TrendingRepo, onTap: () -> Unit) {
                         style = TextStyle(color = MaterialTheme.colors.onBackground.copy(alpha = 0.5f))
                     )
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp),verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Spacer(
                             modifier = Modifier
                                 .size(16.dp)
@@ -87,7 +94,7 @@ fun ListItem(trendingRepo: TrendingRepo, onTap: () -> Unit) {
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(2.dp)
+                .height(1.dp)
                 .padding(start = 32.dp)
                 .background(Color.LightGray.copy(alpha = 0.5f))
         )

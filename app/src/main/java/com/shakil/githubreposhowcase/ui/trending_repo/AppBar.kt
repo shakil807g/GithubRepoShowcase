@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.shakil.githubreposhowcase.R
 
 @Composable
-fun AppBar(isDarkMode: Boolean = false, onToggle: () -> Unit) {
+fun AppBar(isDarkMode: Boolean = false, onToggle: (newTheme: Boolean) -> Unit) {
     Column {
 
         Box {
@@ -45,9 +45,7 @@ fun AppBar(isDarkMode: Boolean = false, onToggle: () -> Unit) {
                 )
             }
 
-            IconButton(onClick = {
-
-            }, modifier = Modifier.align(Alignment.CenterEnd), content = {
+            IconButton(onClick = { onToggle(!isDarkMode) }, modifier = Modifier.align(Alignment.CenterEnd), content = {
                 Icon(
                     imageVector = if (isDarkMode) Icons.Filled.DarkMode else Icons.Filled.LightMode,
                     contentDescription = null,
@@ -60,7 +58,7 @@ fun AppBar(isDarkMode: Boolean = false, onToggle: () -> Unit) {
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(2.dp)
+                .height(1.dp)
                 .padding(start = 32.dp)
                 .background(Color.LightGray.copy(alpha = 0.5f))
         )
