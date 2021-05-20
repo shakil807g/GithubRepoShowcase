@@ -1,5 +1,7 @@
 package com.shakil.githubreposhowcase.ui.trending_repo
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,11 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion.Fit
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.size.Scale
 import coil.transform.CircleCropTransformation
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
 import com.shakil.githubreposhowcase.domain.model.TrendingRepo
 import com.shakil.githubreposhowcase.ui.theme.placeHolderGradient
 
@@ -104,7 +108,21 @@ fun ListItem(trendingRepo: TrendingRepo, onTap: () -> Unit) {
 
 @Composable
 fun Avatar(imageUrl: String) {
-    CoilImage(
+
+    Image(
+        modifier = Modifier.padding(16.dp).size(40.dp),
+        painter = rememberCoilPainter(
+            request = imageUrl,
+            fadeIn = true,
+            requestBuilder = {
+                scale(Scale.FIT)
+                transformations(CircleCropTransformation())
+            },
+        ),
+        contentDescription = null,
+    )
+
+    /*CoilImage(
         contentDescription = null,
         modifier = Modifier.padding(16.dp).size(40.dp),
         contentScale = ContentScale.Fit,
@@ -128,5 +146,5 @@ fun Avatar(imageUrl: String) {
                     .clip(CircleShape)
                     .background(placeHolderGradient)
             )
-        })
+        })*/
 }
