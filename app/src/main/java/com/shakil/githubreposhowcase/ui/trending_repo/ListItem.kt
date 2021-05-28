@@ -1,11 +1,9 @@
 package com.shakil.githubreposhowcase.ui.trending_repo
 
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.R
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -19,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ContentScale.Companion.Fit
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +26,7 @@ import androidx.compose.ui.unit.*
 import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.imageloading.ImageLoadState
 import com.shakil.githubreposhowcase.domain.model.TrendingRepo
 import com.shakil.githubreposhowcase.ui.theme.placeHolderGradient
 
@@ -119,21 +116,39 @@ fun ListItem(trendingRepo: TrendingRepo, onTap: () -> Unit) {
 @Composable
 fun Avatar(imageUrl: String) {
 
-    Image(
-        modifier = Modifier
-            .padding(16.dp)
-            .size(40.dp),
-        painter = rememberCoilPainter(
-            previewPlaceholder = R.drawable.notification_action_background,
-            request = imageUrl,
-            fadeIn = true,
-            requestBuilder = {
-                scale(Scale.FIT)
-                transformations(CircleCropTransformation())
-            },
-        ),
-        contentDescription = null,
+    val painter = rememberCoilPainter(
+        request = imageUrl,
+        fadeIn = true,
+        requestBuilder = {
+            scale(Scale.FIT)
+            transformations(CircleCropTransformation())
+        },
     )
+    Box {
+        Image(
+            modifier = Modifier.padding(16.dp).size(40.dp),
+            painter = painter,
+            contentDescription = null,
+        )
+        when (painter.loadState) {
+            is ImageLoadState.Loading -> {
+                Spacer(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(CircleShape)
+                        .background(placeHolderGradient)
+                )
+            }
+            is ImageLoadState.Error -> {
+                Spacer(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(CircleShape)
+                        .background(placeHolderGradient)
+                )
+            }
+        }
+    }
 
     /*CoilImage(
         contentDescription = null,
@@ -310,15 +325,13 @@ fun DemoLayout() {
     Card(
         modifier = Modifier
                 .fillMaxWidth()
-            .height(200.dp)
-            .padding(16.dp),
+                .height(200.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = 8.dp,
         backgroundColor = MaterialTheme.colors.background,
     ) {
 
-        CustomLayout(modifier = Modifier
-            .fillMaxSize()
+        CustomLayout(modifier = Modifier.fillMaxSize()
         ) {
 
             Spacer(
@@ -336,41 +349,39 @@ fun DemoLayout() {
 
             Text(
                 modifier = Modifier
-                    ,
+                    .background(Color.Red),
                     text = "2:2",
-                    style = TextStyle(fontSize = 22.sp,textAlign = TextAlign.Center),
+                    style = TextStyle(fontSize = 20.sp),
                     maxLines = 1
                 )
 
             Text(
-                modifier = Modifier
-                    ,
-                text = "Eden shhhhshshshshsshh",
+                modifier = Modifier,
+                text = "Eden",
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(fontSize = 18.sp,textAlign = TextAlign.Center),
                 maxLines = 1
             )
 
             Text(
-                modifier = Modifier
-                   ,
+                modifier = Modifier,
                 text = "22:10 - 22:33",
                 style = TextStyle(fontSize = 16.sp,textAlign = TextAlign.Center),
                 maxLines = 1
             )
 
             Text(
-                modifier = Modifier,
-                    //.background(Color.Cyan),
-                text = "SK Slavisdf",
+                modifier = Modifier
+                    .background(Color.Cyan),
+                text = "SKasadadasdadada dasda dasdad addas dadsdss ",
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
                 style = TextStyle(fontSize = 16.sp),
-                maxLines = 1
+                maxLines = 2
             )
 
             Text(
-                modifier = Modifier,
+                modifier = Modifier.background(Color.Red),
                 text = "FC Slavia Praha Slaviass",
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
@@ -398,11 +409,19 @@ fun CustomLayout(
             80.dp.toPx().toInt()
         )
 
-        val width = constraints.maxWidth - ((imageConstraints.maxWidth * 2) + 250)
+
+        val nameConstraint = Constraints.fixed(
+            (constraints.maxWidth / 2) - 80 ,
+            Constraints.Infinity
+        )
+
+
+        val width = constraints.maxWidth - ((16 + (nameConstraint.maxWidth/2) + (imageConstraints.maxWidth/2)) * 2)
+
 
         val scoreConstraints = Constraints.fixed(
             width,
-            30.sp.toPx().toInt()
+            24.sp.toPx().toInt()
         )
 
         val score20Constraints = Constraints.fixed(
@@ -410,37 +429,32 @@ fun CustomLayout(
             20.sp.toPx().toInt()
         )
 
-        val nameConstraint = Constraints.fixed(
-            (constraints.maxWidth / 2) - 60,
-            30.sp.toPx().toInt()
-        )
-
-
-
         val imagePlacable = measurables[0].measure(imageConstraints)
         val imagePlacable2 = measurables[1].measure(imageConstraints)
         val scorePlacalbe = measurables[2].measure(scoreConstraints)
-        val locationPlacalbe = measurables[3].measure(score20Constraints)
+        val locationPlaceable = measurables[3].measure(score20Constraints)
         val datePlacable = measurables[4].measure(score20Constraints)
         val name1 = measurables[5].measure(nameConstraint)
         val name2 = measurables[6].measure(nameConstraint)
 
         layout(constraints.maxWidth, constraints.maxHeight) {
 
-            val halfHeight = imagePlacable.height / 2
-            val halfScreen = ((constraints.maxHeight / 2) - halfHeight)
+            val halfScreenWidth = constraints.maxWidth / 2
+            val halfScreenHeight = constraints.maxHeight / 2
+            val centerXImage = imageConstraints.maxWidth/2
+            val centerXName = nameConstraint.maxWidth/2
+            val scoreX = 16 + centerXName + centerXImage
+            val scoreY = halfScreenHeight - 16 - (scorePlacalbe.height /2)
 
-            imagePlacable.place(x = 10 + (nameConstraint.maxWidth / 2) - imageConstraints.maxWidth / 2 , y = halfScreen)
-            imagePlacable2.place((constraints.maxWidth - 10) - (nameConstraint.maxWidth / 2) - imageConstraints.maxWidth / 2,y = halfScreen)
-            scorePlacalbe.place(10 + (nameConstraint.maxWidth / 2) + (imageConstraints.maxWidth / 2) ,
-                (constraints.maxHeight / 2) - (scoreConstraints.maxHeight / 2))
-            locationPlacalbe.place(10 + (nameConstraint.maxWidth / 2) + (imageConstraints.maxWidth / 2) ,
-                (constraints.maxHeight / 2) - (scoreConstraints.maxHeight / 2) + 30.sp.toPx().toInt())
-            datePlacable.place( 10 + (nameConstraint.maxWidth / 2) + (imageConstraints.maxWidth / 2) ,
-                (constraints.maxHeight / 2) - (scoreConstraints.maxHeight / 2) - 20.sp.toPx().toInt())
 
-            name1.place(16,halfScreen + 80.dp.toPx().toInt() + 10)
-            name2.place(constraints.maxWidth - 16 - name2.width ,halfScreen + 80.dp.toPx().toInt() + 10)
+            imagePlacable.place( centerXName - centerXImage , y = halfScreenHeight - centerXImage - 16 )
+            imagePlacable2.place( constraints.maxWidth - centerXName - centerXImage  , y = halfScreenHeight - centerXImage - 16 )
+            name1.place(16,constraints.maxHeight - name1.height - 16)
+            name2.place(constraints.maxWidth - 16 - name2.width ,constraints.maxHeight - name2.height - 16)
+            scorePlacalbe.place(scoreX,scoreY)
+            locationPlaceable.place(scoreX,scoreY + locationPlaceable.height )
+            datePlacable.place( scoreX,scoreY - datePlacable.height)
+
 
         }
     }
